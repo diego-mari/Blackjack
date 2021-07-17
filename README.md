@@ -1,6 +1,6 @@
 # Blackjack
 
-> ⚠️ • Splitting option is not available.
+> ⚠ㅤSplitting option is not available.
 
 ## Index
 
