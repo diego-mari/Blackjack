@@ -14,7 +14,7 @@ namespace Blackjack.Models
             _suit = suit;
             _face = face;
 
-            _value = _face switch
+            _value = _face switch 
             {
                 "A" => 11,
                 "J" or "Q" or "K" => 10,
@@ -23,6 +23,6 @@ namespace Blackjack.Models
         }
 
         public override string ToString()
-            => _face + " " + _suit;
+            => _face + ' ' + _suit;
     }
 }

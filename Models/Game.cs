@@ -7,15 +7,15 @@ namespace Blackjack.Models
 {
     public class Game
     {
-        char[] suit = {'♥', '♦', '♣', '♠'};
-        string[] face = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+        char[] suit = { '♥', '♦', '♣', '♠' };
+        string[] face = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
 
         List<Card> cards = new List<Card>();
 
         public void FillDeck()
         {
-            foreach(var s in suit)
-                foreach(var f in face)
+            foreach (var s in suit)
+                foreach (var f in face)
                     cards.Add(new Card(s, f));
 
             ShuffleDeck();
@@ -23,7 +23,7 @@ namespace Blackjack.Models
 
         void ShuffleDeck()
         {
-            for(int i = 0; i < cards.Count; i++)
+            for (int i = 0; i < cards.Count; i++)
             {
                 int j = new Random().Next(cards.Count);
                 Card tmp = cards[i];
@@ -36,7 +36,7 @@ namespace Blackjack.Models
         {
             StringBuilder sb = new StringBuilder();
 
-            foreach(var c in cards)
+            foreach (var c in cards)
                 sb.AppendLine(c.ToString());
 
             return sb.ToString();
@@ -67,11 +67,11 @@ namespace Blackjack.Models
         {
             StringBuilder sb = new StringBuilder();
 
-            for(int i = 0; i < 4; i++)
+            for (int i = 0; i < 4; i++)
             {
-                if(i % 2 == 0)
+                if (i % 2 == 0)
                 {
-                    if(valueP + cards[i].Value > 21)
+                    if (valueP + cards[i].Value > 21)
                         cards[i].Value = 1;
 
                     valueP += cards[i].Value;
@@ -79,7 +79,7 @@ namespace Blackjack.Models
                 }
                 else
                 {
-                    if(valueD + cards[i].Value > 21)
+                    if (valueD + cards[i].Value > 21)
                         cards[i].Value = 1;
 
                     valueD += cards[i].Value;
@@ -87,29 +87,29 @@ namespace Blackjack.Models
                 }
             }
 
-            for(int i = 0; i < cardsP.Count; i++)
+            for (int i = 0; i < cardsP.Count; i++)
             {
                 sb.Append(cardsP[i].ToString());
-                if(i != cardsP.Count - 1)
+                if (i != cardsP.Count - 1)
                     sb.Append(" / ");
             }
 
             sb.AppendLine($"\nPlayer's Value: {valueP}\n");
 
-            if(valueP != 21 && cardsD[0].Face == "A" && credits >= bet / 2 || valueP != 21 && valueD != 21)
+            if (valueP != 21 && cardsD[0].Face == "A" && credits >= bet / 2 || valueP != 21 && valueD != 21)
                 sb.Append(cardsD[0].ToString());
             else
             {
-                for(int i = 0; i < cardsD.Count; i++)
+                for (int i = 0; i < cardsD.Count; i++)
                 {
                     sb.Append(cardsD[i].ToString());
-                    if(i != cardsD.Count - 1)
+                    if (i != cardsD.Count - 1)
                         sb.Append(" / ");
                 }
             }
 
             sb.Append("\nDealer's Value: ");
-            if(valueP != 21 && cardsD[0].Face == "A" && credits >= bet / 2 || valueP != 21 && valueD != 21)
+            if (valueP != 21 && cardsD[0].Face == "A" && credits >= bet / 2 || valueP != 21 && valueD != 21)
                 sb.AppendLine(cardsD[0].Value.ToString());
             else
                 sb.AppendLine(valueD.ToString());
@@ -121,10 +121,10 @@ namespace Blackjack.Models
         {
             StringBuilder sb = new StringBuilder();
 
-            if(cardsD[0].Face == "A" && credits >= bet / 2) // player can buy insurance.
+            if (cardsD[0].Face == "A" && credits >= bet / 2) // player can buy insurance.
             {
                 string ans;
-                List<string> opt = new List<string>{"yes", "no"};
+                List<string> opt = new List<string>{ "yes", "no" };
 
                 Console.Write("\n");
 
@@ -139,36 +139,41 @@ namespace Blackjack.Models
                         "n" => "no",
                         _ => ans
                     };
-                }while(! opt.Contains(ans));
+                }while (!opt.Contains(ans));
                 Console.Clear();
             
-                for(int i = 0; i < cardsP.Count; i++)
+                for (int i = 0; i < cardsP.Count; i++)
                 {
                     sb.Append(cardsP[i].ToString());
-                    if(i != cardsP.Count - 1)
+                    if (i != cardsP.Count - 1)
                         sb.Append(" / ");
                 }
 
                 sb.AppendLine($"\nPlayer's Value: {valueP}\n");
-                if(valueD != 21)
+                if (valueD != 21)
                     sb.Append(cardsD[0].ToString());
                 else
-                    for(int i = 0; i < cardsD.Count; i++)
+                {
+                    for (int i = 0; i < cardsD.Count; i++)
                     {
                         sb.Append(cardsD[i].ToString());
-                        if(i != cardsD.Count - 1)
+                        if (i != cardsD.Count - 1)
                             sb.Append(" / ");
-                    }    
+                    } 
+                }   
 
                 sb.Append("\nDealer's Value: ");
-                if(valueD != 21)
+                if (valueD != 21)
                     sb.AppendLine(cardsD[0].Value.ToString());
                 else
                     sb.Append(valueD.ToString());
 
-                Console.WriteLine(sb.ToString());
+                if(valueD != 21)
+                    Console.Write(sb.ToString());
+                else
+                    Console.WriteLine(sb.ToString());
 
-                if(valueD == 21)
+                if (valueD == 21)
                 {
                     return ans switch
                     {
@@ -191,47 +196,49 @@ namespace Blackjack.Models
             valueP += cards[cardsP.Count + cardsD.Count].Value;
             cardsP.Add(cards[cardsP.Count + cardsD.Count]);
 
-            if(valueP > 21)
+            if (valueP > 21)
             {
                 int tmp = 0;
 
-                foreach(var c in cardsP)
+                foreach (var c in cardsP)
                 {
-                    if(c.Face == "A" && c.Value == 11)
+                    if (c.Face == "A" && c.Value == 11)
                     {
                         c.Value = 1;
                         break;
                     }
                 }
 
-                foreach(var c in cardsP)
+                foreach (var c in cardsP)
                     tmp += c.Value;
 
                 valueP = tmp;
             }
 
-            if(ans != "double" && valueP < 21 || valueP > 21)
+            if (ans != "double" && valueP < 21 || valueP > 21)
             {
-                for(int i = 0; i < cardsP.Count; i++)
+                for (int i = 0; i < cardsP.Count; i++)
                 {
                     sb.Append(cardsP[i].ToString());
-                    if(i != cardsP.Count - 1)
+                    if (i != cardsP.Count - 1)
                         sb.Append(" / ");
                 }
 
                 sb.AppendLine($"\nPlayer's Value: {valueP}\n");
-                if(valueP < 21 && cardsD[0].Face != "A")
+                if (valueP < 21 && cardsD[0].Face != "A")
                     sb.Append(cardsD[0].ToString());
                 else
-                    for(int i = 0; i < cardsD.Count; i++)
+                {
+                    for (int i = 0; i < cardsD.Count; i++)
                     {
                         sb.Append(cardsD[i].ToString());
-                        if(i != cardsD.Count - 1)
+                        if (i != cardsD.Count - 1)
                             sb.Append(" / ");
                     }    
+                }
 
                 sb.Append("\nDealer's Value: ");
-                if(valueP < 21)
+                if (valueP < 21)
                     sb.AppendLine(cardsD[0].Value.ToString());
                 else
                     sb.AppendLine(valueD.ToString());
@@ -239,7 +246,7 @@ namespace Blackjack.Models
                 Console.Write(sb.ToString());
             }
 
-            if(valueP > 21)
+            if (valueP > 21)
                 throw new Exception("\nBUSTED!");
         }
 
@@ -247,63 +254,65 @@ namespace Blackjack.Models
         {
             StringBuilder sb = new StringBuilder();
 
-            if(ans != "fold")
+            if (ans != "fold")
+            {
                 for (int i = cardsP.Count + cardsD.Count; valueD < 17; i++)
                 {
                     valueD += cards[i].Value;
                     cardsD.Add(cards[i]);
 
-                    if(valueD > 21)
+                    if (valueD > 21)
                     {
                         int tmp = 0;
 
-                        foreach(var c in cardsD)
+                        foreach (var c in cardsD)
                         {
-                            if(c.Face == "A" && c.Value == 11)
+                            if (c.Face == "A" && c.Value == 11)
                             {
                                 c.Value = 1;
                                 break;
                             }
                         }
 
-                        foreach(var c in cardsD)
+                        foreach (var c in cardsD)
                             tmp += c.Value;
 
                         valueD = tmp;
                     }
                 }
+            }
         
-            for(int i = 0; i < cardsP.Count; i++)
+            for (int i = 0; i < cardsP.Count; i++)
             {
                 sb.Append(cardsP[i].ToString());
-                if(i != cardsP.Count - 1)
+                if (i != cardsP.Count - 1)
                     sb.Append(" / ");
             }
 
             sb.AppendLine($"\nPlayer's Value: {valueP}\n");
-            for(int i = 0; i < cardsD.Count; i++)
+            for (int i = 0; i < cardsD.Count; i++)
             {
                 sb.Append(cardsD[i].ToString());
-                if(i != cardsD.Count - 1)
+                if (i != cardsD.Count - 1)
                     sb.Append(" / ");
             }   
 
             sb.Append("\nDealer's Value: " + valueD);
             Console.WriteLine(sb.ToString());
 
-            if(ans == "fold")
+            if (ans == "fold")
                 return bet / 2;
 
-            if(valueD > 21 || valueP > valueD)
+            if (valueD > 21 || valueP > valueD)
             {
                 Win();
 
-                if(ans == "double")
+                if (ans == "double")
                     bet *= 2;
 
                 return bet * 2;
-            }
-            else if(valueP < valueD)
+            } 
+            else if (valueP < valueD)
             {
                 Lose();
                 return 0;
@@ -311,7 +320,7 @@ namespace Blackjack.Models
 
             Push();
 
-            if(ans == "double")
+            if (ans == "double")
                 bet *= 2;
 
             return bet;
