@@ -32,7 +32,7 @@ Blackjack is played with a conventional deck of 52 playing cards and suits donâ€
 2. Face cards (J,Q,K) count as 10.
 3. Ace can count as a 1 or an 11 depending on which value helps the hand the most.
 
-![Blackjack Card Values](https://bit.ly/3gbgmoj)
+![Blackjack Card Values](https://www.888casino.com/blog/sites/newblog.888casino.com/files/inline-images/card-value.png)
 ###### 2-9 count at face value, tens and face cards count as 10, and Aces count as 1 or 11.
 
 ## How To Play
